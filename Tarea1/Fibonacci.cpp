@@ -17,10 +17,10 @@
 #include <string>
 
 //defined pointer function
-typedef int(*callBackFunc)(int);
+typedef unsigned long(*callBackFunc)(int);
 
-int FibonacciRecursiva(int n);
-int FibonacciNORecursiva(int n);
+unsigned long FibonacciRecursiva(int n);
+unsigned long FibonacciNORecursiva(int n);
 double timeTookInFunc(callBackFunc pfunc, int num, int& res);
 void LogInfo(int res, double time, std::string str = "NO recursive ");
 
@@ -36,15 +36,14 @@ int main()
   LogInfo(res, timeTook);
 
   timeTook = timeTookInFunc(&FibonacciRecursiva, num, res);
-  LogInfo(res, timeTook,"");
-
+  LogInfo(res, timeTook, "");
   return 0;
 }
 
 /** 
  * @brief Fibonacci algorithm using recursive
  */
-int
+unsigned long
 FibonacciRecursiva(int n)
 {
   if (n <= 1)
@@ -60,27 +59,30 @@ FibonacciRecursiva(int n)
 /** 
  * @brief Fibonacci algorithms using no recursive
  */
-int
+unsigned long
 FibonacciNORecursiva(int n)
 {
-  //initialize variable
-  int n1 = 0, n2 = 1;
+//   //initialize variable
+//   int n1 = 0, n2 = 1;
+// 
+//   if(n <= 1)
+//   {
+//     return n;
+//   }
+//   else
+//   {
+//     int tmp = 0;
+//     for(int i = 0; i < n - 1; ++i)
+//     {
+//       tmp = n1 + n2;
+//       n1 = n2;
+//       n2 = tmp;
+//     }
+//     return tmp;
+//   }
 
-  if(n <= 1)
-  {
-    return n;
-  }
-  else
-  {
-    int tmp = 0;
-    for(int i = 0; i < n - 1; ++i)
-    {
-      tmp = n1 + n2;
-      n1 = n2;
-      n2 = tmp;
-    }
-    return tmp;
-  }
+  double phi = (1 + sqrt(5)) / 2;
+  return round(pow(phi, n) / sqrt(5));
 }
 
 /** 
