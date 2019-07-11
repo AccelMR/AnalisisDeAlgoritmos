@@ -70,8 +70,37 @@
     * @param key that will be transformed into a int 
     */
    int myhash(const K& key) const {
-     static std::hash<K> hash_fn;
-     return (hash_fn(key) % m_map.size());
+     int hashed = 0;
+
+     int street = 0;
+     int house = 0;
+     int person = 0;
+     int digits = 0;
+
+     float precision = 0.0f;
+
+     street = key % m_map.size();
+     house = std::abs(std::floor(key / m_map.size()));
+
+     precision = static_cast<float>(key) / static_cast<float>(m_map.size());
+     precision = std::fabs(precision) - house;
+
+     person = static_cast<int>(precision * 1000);
+
+     digits = street > 0 ? static_cast<int>(log10(static_cast<double>(street))) + 1 : 1;
+
+     std::string toConcat;
+     toConcat += std::to_string(digits);
+     toConcat += std::to_string(street);
+     toConcat += std::to_string(house);
+
+     if(person < 10) { toConcat += std::to_string(0); }
+     toConcat += std::to_string(person);
+
+     toConcat += key > 0 ? std::to_string(1) : std::to_string(2);
+
+     hashed = atoi(toConcat.c_str());
+     return hashed;
    }
 
    /** 
